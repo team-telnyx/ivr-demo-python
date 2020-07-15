@@ -29,18 +29,18 @@ def respond():
         # print(event, flush=True) For testing purposes you can print out the event if you'd like
 
         # When call is initiated, add the call control id to the my_ivr object
-        if event == "call_initiated":
+        if event == "call.initiated":
             my_ivr.call_control_id = data.get('payload').get('call_control_id')
             
             # Answer the call
             print(telnyx.Call.answer(my_ivr), flush=True)
 
         # When the call is answered, initiate gather_using_speak
-        elif event == "call_answered":
+        elif event == "call.answered":
             print(telnyx.Call.gather_using_speak(my_ivr, payload="Press 1 to record a voicemail or 2 to have the application hang up", valid_digits="12", language = "en-US", voice = "male"), flush=True)
         
         # When gather is ended, collect the digit pressed and speak them
-        elif event == "gather_ended":
+        elif event == "call.gather.ended":
             speak_str = "The digits you pressed were" + " ".join(data.get('payload').get('digits'))
             print(telnyx.Call.speak(my_ivr, payload=speak_str, language = "en-US", voice = "male"), flush=True)
 
