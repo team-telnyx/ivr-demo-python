@@ -19,7 +19,7 @@ def respond():
     global my_ivr
 
     # Get the data from the request
-    data = request.json
+    data = request.json.get('data')
     # print(data) For testing purposes, you could print out the data object received
 
     # Check record_type
