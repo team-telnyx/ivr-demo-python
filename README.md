@@ -86,7 +86,7 @@ At this point you can point your call control application to generated ngrok URL
 
 ### Run
 
-Run the app with the PHP servering on port 8000
+Run the app with the Flask servering on port 5000
 
 ```
 python app.py
@@ -98,7 +98,7 @@ You can now call your Telnyx phone number and listen to the weather hotline. You
 
 ### Adding more cities
 
-The IVR supports up to 9 (1 - 9) cities.  To change or add see the [Dial-a-forecast](https://www.weather.gov/dial-a-forecast/) website.
+The IVR supports up to 9 (DTMF 1 - 9) selections.  To change or add see the [Dial-a-forecast](https://www.weather.gov/dial-a-forecast/) website.
 
 You can add more selections the `IVR_CONFIG['items']` dictionary.
 
