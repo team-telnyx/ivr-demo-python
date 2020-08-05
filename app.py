@@ -62,8 +62,8 @@ def respond():
         elif event == 'call.gather.ended':
             digits_pressed = data.get('payload').get('digits')
             phone_number_lookup = my_ivr.get_phone_number_from_digit(digits_pressed)
-            if (phone_number_lookup.valid):
-                to = phone_number_lookup.phone_number
+            if (phone_number_lookup):
+                to = phone_number_lookup
                 res = my_call.transfer(to=to)
                 print(res, flush=True)
     #print(request.json, flush=True); For testing purposes, you can print out the entire json received
