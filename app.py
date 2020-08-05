@@ -37,7 +37,6 @@ def respond():
         call_control_id = data.get('payload').get('call_control_id')
         my_call = telnyx.Call()
         my_call.call_control_id = call_control_id
-        # When call is initiated, add the call control id to the my_ivr object
         if event == 'call.initiated':
             direction = data.get('payload').get('direction')
             if (direction == 'incoming'):
