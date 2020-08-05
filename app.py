@@ -1,73 +1,25 @@
 import telnyx
 import os
+import base64
+import json
 from flask import Flask, request, Response
 from dotenv import load_dotenv
-import base64
+from ivr import IVR
+
 load_dotenv()
-
-class Phone_number_response:
-    def __init__(self, valid, phone_number=''):
-        self.valid = valid
-        self.phone_number = phone_number
-
-class IVR_Controller:
-    def __init__(self, config):
-        self.intro = config['intro']
-        self.iterable = config['iterable']
-        self.items = config['items']
-        self.phone_number_table = {}
-        self.valid_inputs = ''
-        self.prompt = self.intro
-        self._build_ivr()
-
-    def get_prompt(self):
-        return self.prompt
-
-    def get_valid_digits(self):
-        return self.valid_inputs
-
-    def _build_ivr(self):
-        length = len(self.items)
-        for i in range(length):
-            context = self.items[i]['context']
-            phone_number = self.items[i]['phone number']
-            digit = str(i+1)
-            prompt = self._fill_iterable(context, digit)
-            self.prompt = f'{self.prompt}, {prompt}'
-            self.phone_number_table[digit] = phone_number
-            self.valid_inputs = f'{self.valid_inputs}{digit}'
-
-    def get_phone_number_from_digit(self, digit):
-        if (digit in self.phone_number_table):
-            return Phone_number_response(True, self.phone_number_table[digit])
-        else:
-            return Phone_number_response(False)
-
-    def _fill_iterable(self, context, digit):
-        return self.iterable % (context, digit)
-
-
-IVR_Config = {
-    'intro': 'Thank you for calling the Weather Hotline.',
-    'iterable': 'For weather in %s press %s',
-    'items':  [
-        {
-            'context': 'Chicago, Illinois',
-            'phone number': '+18158340675'
-        },
-        {
-            'context': 'Raleigh, North Carolina',
-            'phone number': '+19193261052'
-        }
-    ]
-}
-
-my_ivr = IVR_Controller(IVR_Config)
-
 telnyx.api_key = os.getenv('TELNYX_API_KEY')
 
-app = Flask(__name__)
+def open_IVR_config_json(file_name):
+    with open(file_name) as json_file:
+        data = json.load(json_file)
+        return data
 
+ivr_config = open_IVR_config_json('ivrConfig.json')
+my_ivr = IVR(intro = ivr_config['intro'],
+            iterable = ivr_config['iterable'],
+            items = ivr_config['items'])
+
+app = Flask(__name__)
 
 @app.route('/Callbacks/Voice/Inbound', methods=['POST'])
 def respond():

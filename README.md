@@ -98,33 +98,33 @@ You can now call your Telnyx phone number and listen to the weather hotline. You
 
 ### Adding more cities
 
-The IVR supports up to 9 (DTMF 1 - 9) selections.  To change or add see the [Dial-a-forecast](https://www.weather.gov/dial-a-forecast/) website.
+To change or add see the [Dial-a-forecast](https://www.weather.gov/dial-a-forecast/) website.
 
-You can add more selections the `IVR_CONFIG['items']` dictionary.
+You can add more selections to the `ivrConfig.json` file in the `items` array. The app easily supports up to 9 total selections (mapping to DTMF button presses of 1-9).
 
-```python
-IVR_Config = {
-    'intro': 'Thank you for calling the Weather Hotline.',
-    'iterable': 'For weather in %s press %s',
-    'items':  [
+```json
+{
+    "intro": "Thank you for calling the Weather Hotline.",
+    "iterable": "For weather in %s press %s",
+    "items":  [
         {
-            'context': 'Chicago, Illinois',
-            'phone number': '+18158340675'
+            "itemName": "Chicago, Illinois",
+            "phoneNumber": "+18158340675"
         },
         {
-            'context': 'Raleigh, North Carolina',
-            'phone number': '+19193261052'
+            "itemName": "Raleigh, North Carolina",
+            "phoneNumber": "+19193261052"
         }
     ]
 }
 ```
 
-Adding a new item to the list will update the IVR next time the app is launched. For example adding Denver would look something like:
+To add a new item to the list add a new object to the items with two key/value pairs, the `itemName` is spoken to the user and the phoneNumber is the transferred destination.  The app will rebuild the IVR next launch.
 
-```
+```json
 {
-  'context': 'Denver, Colorado',
-  'phone number': '+13034944221'
+  "itemName": "Denver, Colorado",
+  "phoneNumber": "+13034944221"
 }
 ```
 

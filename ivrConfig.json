@@ -1,0 +1,14 @@
+{
+    "intro": "Thank you for calling the Weather Hotline.",
+    "iterable": "For weather in %s press %s",
+    "items":  [
+        {
+            "itemName": "Chicago, Illinois",
+            "phoneNumber": "+18158340675"
+        },
+        {
+            "itemName": "Raleigh, North Carolina",
+            "phoneNumber": "+19193261052"
+        }
+    ]
+}
