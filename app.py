@@ -6,8 +6,7 @@ from flask import Flask, request, Response
 from dotenv import load_dotenv
 from ivr import IVR
 
-load_dotenv()
-telnyx.api_key = os.getenv('TELNYX_API_KEY')
+
 
 def open_IVR_config_json(file_name):
     with open(file_name) as json_file:
@@ -70,4 +69,7 @@ def respond():
     return Response(status=200)
 
 if __name__ == '__main__':
-    app.run()
+    ## pythonic?
+    load_dotenv()
+    telnyx.api_key = os.getenv('TELNYX_API_KEY')
+    app.run(port=8000)
